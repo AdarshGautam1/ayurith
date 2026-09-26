@@ -6,7 +6,7 @@ import logging
 from app.config import settings
 from app.models.database import init_db
 from app.services.ingestion import get_chroma_client, init_chroma_collections
-from app.api import health, chat, classify, ingest, sources
+from app.api import health, chat, classify, ingest, sources, treatises, synergy, dossier
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +50,9 @@ app.include_router(chat.router, prefix="/api", tags=["chat"])
 app.include_router(classify.router, prefix="/api", tags=["classify"])
 app.include_router(ingest.router, prefix="/api", tags=["ingest"])
 app.include_router(sources.router, prefix="/api", tags=["sources"])
+app.include_router(treatises.router, prefix="/api", tags=["treatises"])
+app.include_router(synergy.router, prefix="/api", tags=["synergy"])
+app.include_router(dossier.router, prefix="/api", tags=["dossier"])
 
 if __name__ == "__main__":
     import uvicorn

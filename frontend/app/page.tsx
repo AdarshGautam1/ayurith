@@ -17,7 +17,10 @@ import {
   ExternalLink,
   Layers,
   Sparkles,
-  Info
+  Info,
+  Zap,
+  Database,
+  ClipboardCheck
 } from "lucide-react";
 
 export default function Home() {
@@ -172,6 +175,128 @@ export default function Home() {
           <p className="text-xs text-[#526357] mt-2 leading-relaxed">
             Normalized cosine distance matching [0,1] with mandatory abstention when statutory proof is insufficient.
           </p>
+        </div>
+      </section>
+
+      {/* Phase 3 Statutory Engineering & Regulatory Intelligence Suite */}
+      <section className="space-y-6">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#8f6d2b] uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5" />
+            Phase 3 Statutory Modules
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold font-heading text-[#10291a] mt-1">
+            End-to-End Ayurvedic IP Due Diligence Architecture
+          </h2>
+          <p className="text-sm text-[#4c5d51] mt-2">
+            Integrated regulatory tools designed specifically to resolve Section 3(p) prior art anticipation, prove Section 3(e) synergistic non-admixture, verify classical treatise lineage, and generate official government dossiers.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Module 1: Treatises */}
+          <Link 
+            href="/treatises" 
+            className="group p-5 rounded-2xl bg-gradient-to-b from-[#fdfcf9] to-[#f7f4ed] border border-[#e2dcd0] hover:border-[#144226] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="w-8 h-8 rounded-lg bg-[#e8ede9] text-[#144226] flex items-center justify-center font-bold text-sm">
+                  <BookOpen className="w-4 h-4 text-[#144226]" />
+                </span>
+                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[#e8ede9] text-[#144226] font-bold">
+                  D&C Act
+                </span>
+              </div>
+              <h3 className="font-heading font-bold text-base text-[#10291a] group-hover:text-[#144226] transition-colors">
+                54 Classical Treatises
+              </h3>
+              <p className="text-xs text-[#526457] leading-relaxed">
+                Codified First Schedule compendia (Charaka, Sushruta, Vagbhata) with statutory verification simulator for Rule 158B exemptions and Section 3(p) prior art bars.
+              </p>
+            </div>
+            <div className="pt-2 text-xs font-semibold text-[#144226] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Explore 54 Treatises <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+
+          {/* Module 2: Synergy */}
+          <Link 
+            href="/synergy" 
+            className="group p-5 rounded-2xl bg-gradient-to-b from-[#fdfcf9] to-[#f7f4ed] border border-[#e2dcd0] hover:border-[#7a5a19] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="w-8 h-8 rounded-lg bg-[#fbf2da] text-[#7a5a19] flex items-center justify-center font-bold text-sm">
+                  <Zap className="w-4 h-4 text-[#7a5a19]" />
+                </span>
+                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[#fbf2da] text-[#7a5a19] font-bold">
+                  Sec 3(e)
+                </span>
+              </div>
+              <h3 className="font-heading font-bold text-base text-[#10291a] group-hover:text-[#7a5a19] transition-colors">
+                Synergy Evaluator
+              </h3>
+              <p className="text-xs text-[#526457] leading-relaxed">
+                Chou-Talalay Combination Index ($CI$) calculator and Dose Reduction Index (DRI) engine with automated IPO Form 2 patent claim drafting.
+              </p>
+            </div>
+            <div className="pt-2 text-xs font-semibold text-[#7a5a19] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Calculate Synergy <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+
+          {/* Module 3: Sources */}
+          <Link 
+            href="/sources" 
+            className="group p-5 rounded-2xl bg-gradient-to-b from-[#fdfcf9] to-[#f7f4ed] border border-[#e2dcd0] hover:border-[#1b5230] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="w-8 h-8 rounded-lg bg-[#e8ede9] text-[#1b5230] flex items-center justify-center font-bold text-sm">
+                  <Database className="w-4 h-4 text-[#1b5230]" />
+                </span>
+                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[#e8ede9] text-[#1b5230] font-bold">
+                  Vector Corpus
+                </span>
+              </div>
+              <h3 className="font-heading font-bold text-base text-[#10291a] group-hover:text-[#1b5230] transition-colors">
+                Statutory Registry
+              </h3>
+              <p className="text-xs text-[#526457] leading-relaxed">
+                Live ChromaDB vector storage explorer with semantic chunk inspection and drag-and-drop statutory PDF ingestion.
+              </p>
+            </div>
+            <div className="pt-2 text-xs font-semibold text-[#1b5230] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Inspect Registry <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+
+          {/* Module 4: Dossier */}
+          <Link 
+            href="/dossier" 
+            className="group p-5 rounded-2xl bg-gradient-to-b from-[#fdfcf9] to-[#f7f4ed] border border-[#e2dcd0] hover:border-[#802f1a] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="w-8 h-8 rounded-lg bg-[#eddcd2] text-[#802f1a] flex items-center justify-center font-bold text-sm">
+                  <ClipboardCheck className="w-4 h-4 text-[#802f1a]" />
+                </span>
+                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[#eddcd2] text-[#802f1a] font-bold">
+                  5-Pillars
+                </span>
+              </div>
+              <h3 className="font-heading font-bold text-base text-[#10291a] group-hover:text-[#802f1a] transition-colors">
+                Due Diligence Dossier
+              </h3>
+              <p className="text-xs text-[#526457] leading-relaxed">
+                Comprehensive statutory audit report evaluating Section 3(p), 3(e), NBA Section 6 Form III, Rule 158B, and DMRA with one-click print/PDF export.
+              </p>
+            </div>
+            <div className="pt-2 text-xs font-semibold text-[#802f1a] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Generate Dossier <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
         </div>
       </section>
 
