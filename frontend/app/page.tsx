@@ -23,7 +23,9 @@ import {
   ClipboardCheck,
   Activity,
   Sliders,
-  ShieldAlert
+  ShieldAlert,
+  GitCompare,
+  Calculator
 } from "lucide-react";
 
 export default function Home() {
@@ -540,6 +542,102 @@ export default function Home() {
             </div>
             <div className="pt-2 text-xs font-semibold text-[#802f1a] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
               Generate Dossier <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* Phase 4 Statutory Intelligence Suite: Prior-Art Landscape, NBA Form III & Diff Engine */}
+      <section className="space-y-6">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#144226] uppercase tracking-wider">
+            <Scale className="w-3.5 h-3.5" />
+            Phase 4 Advanced Statutory Suite
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold font-heading text-[#10291a] mt-1">
+            Prior-Art Landscape, NBA Section 6 & Formulation Diff Engine
+          </h2>
+          <p className="text-sm text-[#4c5d51] mt-2">
+            Quantitative patentability probability scoring against international patent offices, mandatory Biological Diversity Act 2002/2023 Form III approval & ABS calculators, and multi-formulation side-by-side comparative diffs.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {/* Card 1: Patentability Probability Scorer */}
+          <Link 
+            href="/patentability" 
+            className="group p-6 rounded-2xl bg-gradient-to-b from-[#fdfcf9] to-[#f7f4ed] border border-[#ded8cb] hover:border-[#144226] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="w-9 h-9 rounded-lg bg-[#e3ece5] text-[#144226] flex items-center justify-center font-bold text-sm">
+                  <Scale className="w-4 h-4 text-[#144226]" />
+                </span>
+                <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded bg-[#e3ece5] text-[#144226] font-bold">
+                  PPI Scorer
+                </span>
+              </div>
+              <h3 className="font-heading font-bold text-lg text-[#10291a] group-hover:text-[#144226] transition-colors">
+                Prior-Art & Patentability Scorer
+              </h3>
+              <p className="text-xs text-[#526457] leading-relaxed">
+                Computes quantitative Patentability Probability Index (PPI) evaluating Novelty (§ 2(1)(j)), Inventive Step (§ 2(1)(ja)), Industrial Applicability, and Section 3 exclusions with claim anticipation against IPO, USPTO, EPO, and TKDL.
+              </p>
+            </div>
+            <div className="pt-2 text-xs font-semibold text-[#144226] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Launch Patentability Scorer <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+
+          {/* Card 2: NBA Form III Assistant */}
+          <Link 
+            href="/nba" 
+            className="group p-6 rounded-2xl bg-gradient-to-b from-[#fdfcf9] to-[#f7f4ed] border border-[#ded8cb] hover:border-[#802f1a] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="w-9 h-9 rounded-lg bg-[#eddcd2] text-[#802f1a] flex items-center justify-center font-bold text-sm">
+                  <Calculator className="w-4 h-4 text-[#802f1a]" />
+                </span>
+                <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded bg-[#eddcd2] text-[#802f1a] font-bold">
+                  BDA § 6 / ABS
+                </span>
+              </div>
+              <h3 className="font-heading font-bold text-lg text-[#10291a] group-hover:text-[#802f1a] transition-colors">
+                NBA Form III & Benefit-Sharing
+              </h3>
+              <p className="text-xs text-[#526457] leading-relaxed">
+                Access & Benefit Sharing (ABS Regulation 9) fee calculator (0.1% to 0.5% ex-factory tiers), statutory Form III patent approval dossier generator, SBB intimation audits, and Section 55 civil penal assessment.
+              </p>
+            </div>
+            <div className="pt-2 text-xs font-semibold text-[#802f1a] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Open NBA Compliance Engine <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+
+          {/* Card 3: Formulation Diff Engine */}
+          <Link 
+            href="/compare" 
+            className="group p-6 rounded-2xl bg-gradient-to-b from-[#fdfcf9] to-[#f7f4ed] border border-[#ded8cb] hover:border-[#7a5a19] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="w-9 h-9 rounded-lg bg-[#fbf2da] text-[#7a5a19] flex items-center justify-center font-bold text-sm">
+                  <GitCompare className="w-4 h-4 text-[#7a5a19]" />
+                </span>
+                <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded bg-[#fbf2da] text-[#7a5a19] font-bold">
+                  Formulation Diff
+                </span>
+              </div>
+              <h3 className="font-heading font-bold text-lg text-[#10291a] group-hover:text-[#7a5a19] transition-colors">
+                Polyherbal Diff Engine
+              </h3>
+              <p className="text-xs text-[#526457] leading-relaxed">
+                Side-by-side comparison of 2 or 3 formulations (Classical vs Commercial vs Patented NDDS). Ingredient concordance matrix, active biomarker concentrations, and Rule 158B vs Patent Section 3 regulatory divergence.
+              </p>
+            </div>
+            <div className="pt-2 text-xs font-semibold text-[#7a5a19] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Run Formulation Diff <ArrowRight className="w-3.5 h-3.5" />
             </div>
           </Link>
         </div>

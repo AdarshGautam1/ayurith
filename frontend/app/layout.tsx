@@ -38,42 +38,62 @@ export default function RootLayout({
             <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto py-1 max-w-full">
               <Link 
                 href="/" 
-                className="px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap"
+                className="px-2 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap"
               >
                 Overview
               </Link>
               <Link 
                 href="/classifier" 
-                className="px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap"
+                className="px-2 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap"
               >
                 Classifier
               </Link>
               <Link 
                 href="/treatises" 
-                className="px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap flex items-center gap-1"
+                className="px-2 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap flex items-center gap-1"
               >
                 <span>54 Treatises</span>
                 <span className="text-[9px] bg-[#e6ede7] text-[#144226] font-bold px-1.5 py-0.2 rounded-full">D&C</span>
               </Link>
               <Link 
                 href="/synergy" 
-                className="px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap flex items-center gap-1"
+                className="px-2 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap flex items-center gap-1"
               >
                 <span>Synergy</span>
                 <span className="text-[9px] bg-[#fbf2da] text-[#7a5a19] font-bold px-1.5 py-0.2 rounded-full">Sec 3(e)</span>
               </Link>
               <Link 
-                href="/sources" 
-                className="px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap"
+                href="/patentability" 
+                className="px-2 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap flex items-center gap-1"
               >
-                Sources
+                <span>Patentability</span>
+                <span className="text-[9px] bg-[#e1ede4] text-[#144226] font-bold px-1.5 py-0.2 rounded-full">PPI</span>
+              </Link>
+              <Link 
+                href="/nba" 
+                className="px-2 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap flex items-center gap-1"
+              >
+                <span>NBA Form III</span>
+                <span className="text-[9px] bg-[#eddcd2] text-[#802f1a] font-bold px-1.5 py-0.2 rounded-full">ABS</span>
+              </Link>
+              <Link 
+                href="/compare" 
+                className="px-2 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap flex items-center gap-1"
+              >
+                <span>Diff Engine</span>
+                <span className="text-[9px] bg-[#f2ecdc] text-[#5e4b1a] font-bold px-1.5 py-0.2 rounded-full">Diff</span>
               </Link>
               <Link 
                 href="/dossier" 
-                className="px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap flex items-center gap-1"
+                className="px-2 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap"
               >
-                <span>Audit Dossier</span>
-                <span className="text-[9px] bg-[#eddcd2] text-[#802f1a] font-bold px-1.5 py-0.2 rounded-full">NBA</span>
+                Audit Dossier
+              </Link>
+              <Link 
+                href="/sources" 
+                className="px-2 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-[#384a3e] hover:text-[#10291a] hover:bg-[#f0ece1] transition-colors whitespace-nowrap"
+              >
+                Sources
               </Link>
               <Link 
                 href="/chat" 
