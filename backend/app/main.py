@@ -1,9 +1,12 @@
+import sys
 import socket
-# Force IPv4 socket resolution on Windows to avoid IPv6 routing blackholes/delays
-_orig_getaddrinfo = socket.getaddrinfo
-def _ipv4_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
-    return _orig_getaddrinfo(host, port, socket.AF_INET, type, proto, flags)
-socket.getaddrinfo = _ipv4_getaddrinfo
+
+# Force IPv4 socket resolution only on Windows to avoid IPv6 routing blackholes/delays
+if sys.platform == "win32":
+    _orig_getaddrinfo = socket.getaddrinfo
+    def _ipv4_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
+        return _orig_getaddrinfo(host, port, socket.AF_INET, type, proto, flags)
+    socket.getaddrinfo = _ipv4_getaddrinfo
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -64,6 +67,16 @@ app.include_router(patentability.router, prefix="/api", tags=["patentability"])
 app.include_router(nba.router, prefix="/api", tags=["nba"])
 app.include_router(compare.router, prefix="/api", tags=["compare"])
 
+@app.get("/")
+async def root():
+    return {"status": "ok", "service": "IP-SHAKTI Sahayak API", "version": "0.1.0"}
+
+@app.get("/health")
+async def root_health():
+    return {"status": "ok"}
+
 if __name__ == "__main__":
+    import os
     import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("app.main:app", host="0.0.0.0", port=port, reload=False)
