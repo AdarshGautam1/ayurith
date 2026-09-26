@@ -7,13 +7,27 @@ from app.config import settings
 from app.utils.text_processing import clean_text, detect_structure, chunk_text
 from datetime import datetime
 from app.models.database import SessionLocal, DocumentModel
-from typing import Optional
+import logging
+from typing import Optional, Dict, Any
 
-def init_chroma_client():
-    return chromadb.PersistentClient(
-        path=settings.chroma_persist_dir,
-        settings=ChromaSettings(anonymized_telemetry=False)
-    )
+logger = logging.getLogger(__name__)
+
+_chroma_client: Optional[chromadb.PersistentClient] = None
+
+def get_chroma_client() -> chromadb.PersistentClient:
+    """Returns a singleton ChromaDB PersistentClient."""
+    global _chroma_client
+    if _chroma_client is None:
+        os.makedirs(settings.chroma_persist_dir, exist_ok=True)
+        _chroma_client = chromadb.PersistentClient(
+            path=settings.chroma_persist_dir,
+            settings=ChromaSettings(anonymized_telemetry=False)
+        )
+    return _chroma_client
+
+def init_chroma_client() -> chromadb.PersistentClient:
+    """Backward-compatible helper returning the persistent Chroma client."""
+    return get_chroma_client()
 
 def get_or_create_collection(client, jurisdiction: str):
     collection_name = f"{jurisdiction}_docs"
@@ -23,6 +37,29 @@ def get_or_create_collection(client, jurisdiction: str):
         metadata={"hnsw:space": settings.chroma_distance_metric}
     )
     return collection
+
+def init_chroma_collections(client: Optional[chromadb.PersistentClient] = None) -> Dict[str, Any]:
+    """Pre-warms and verifies persistent collections for both jurisdictions."""
+    if client is None:
+        client = get_chroma_client()
+
+    jurisdictions = ["india", "international"]
+    collection_stats = {}
+
+    for jurisdiction in jurisdictions:
+        coll = get_or_create_collection(client, jurisdiction)
+        count = coll.count()
+        collection_stats[f"{jurisdiction}_docs"] = {
+            "name": f"{jurisdiction}_docs",
+            "jurisdiction": jurisdiction,
+            "count": count,
+            "distance_metric": settings.chroma_distance_metric,
+        }
+        logger.info(
+            f"ChromaDB persistent collection '{jurisdiction}_docs' initialized: {count} chunks, metric='{settings.chroma_distance_metric}'"
+        )
+
+    return collection_stats
 
 def process_pdf(
     file_path: str,

@@ -2,17 +2,31 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
+import logging
 from app.config import settings
 from app.models.database import init_db
+from app.services.ingestion import get_chroma_client, init_chroma_collections
 from app.api import health, chat, classify, ingest, sources
+
+logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Initialize SQLite database
+    logger.info("Initializing SQLite database...")
     init_db()
-    # Will initialize ChromaDB client here in next phases
+    
+    # Initialize persistent ChromaDB vector storage and collections
+    logger.info("Initializing persistent ChromaDB vector storage...")
+    chroma_client = get_chroma_client()
+    chroma_stats = init_chroma_collections(chroma_client)
+    app.state.chroma_client = chroma_client
+    app.state.chroma_stats = chroma_stats
+    logger.info("ChromaDB initialization complete.")
+    
     yield
     # Cleanup code if needed
+    logger.info("Shutting down application...")
 
 app = FastAPI(
     title="IP-SHAKTI Sahayak API",

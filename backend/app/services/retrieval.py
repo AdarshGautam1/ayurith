@@ -1,6 +1,6 @@
 from typing import List, Tuple
 from app.config import settings
-from app.services.ingestion import init_chroma_client, get_or_create_collection
+from app.services.ingestion import get_chroma_client, get_or_create_collection
 from app.models.schemas import SourceCard
 from sentence_transformers import SentenceTransformer
 
@@ -14,7 +14,7 @@ def get_embedding_model():
     return _embedding_model
 
 def retrieve_chunks(query: str, jurisdiction: str, top_k: int = 5) -> List[SourceCard]:
-    client = init_chroma_client()
+    client = get_chroma_client()
     collection = get_or_create_collection(client, jurisdiction)
     
     model = get_embedding_model()
