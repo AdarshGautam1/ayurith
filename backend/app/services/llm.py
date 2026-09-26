@@ -136,9 +136,9 @@ def generate_rag_response(query: str, evidence_context: str, target_language: st
     
     # Try candidate models in order of priority: working flash models
     candidate_models = list(dict.fromkeys([
+        "gemini-3.8-flash",
         settings.gemini_model,
-        "gemini-3-flash-preview",
-        "gemini-3.8-flash"
+        "gemini-3-flash-preview"
     ]))
     
     import time
