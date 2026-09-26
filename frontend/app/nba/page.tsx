@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { API_BASE_URL } from "../apiConfig";
 import { 
   FileText, 
   Check, 
@@ -101,7 +102,7 @@ export default function NBAPage() {
 
   const fetchBenchmarks = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/nba/benchmarks");
+      const res = await fetch(`${API_BASE_URL}/api/nba/benchmarks`);
       if (res.ok) {
         const data = await res.json();
         setBenchmarks(data);
@@ -122,7 +123,7 @@ export default function NBAPage() {
         raw_material_type: rawMaterialType
       };
 
-      const res = await fetch("http://127.0.0.1:8000/api/nba/calculate-abs", {
+      const res = await fetch(`${API_BASE_URL}/api/nba/calculate-abs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -156,7 +157,7 @@ export default function NBAPage() {
         benefit_sharing_commitment_accepted: true
       };
 
-      const res = await fetch("http://127.0.0.1:8000/api/nba/form-iii", {
+      const res = await fetch(`${API_BASE_URL}/api/nba/form-iii`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

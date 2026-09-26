@@ -2,14 +2,19 @@ from typing import List, Tuple
 from app.config import settings
 from app.services.ingestion import get_chroma_client, get_or_create_collection
 from app.models.schemas import SourceCard
-from sentence_transformers import SentenceTransformer
-
-# Load model once globally for retrieval
+# Load model once globally for retrieval lazily
 _embedding_model = None
 
 def get_embedding_model():
     global _embedding_model
     if _embedding_model is None:
+        try:
+            import torch
+            torch.set_num_threads(1)
+            torch.set_num_interop_threads(1)
+        except Exception:
+            pass
+        from sentence_transformers import SentenceTransformer
         _embedding_model = SentenceTransformer(settings.embedding_model)
     return _embedding_model
 

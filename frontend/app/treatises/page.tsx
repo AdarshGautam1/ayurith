@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { API_BASE_URL } from "../apiConfig";
 import { Scale } from "lucide-react";
 
 interface Treatise {
@@ -51,7 +52,7 @@ export default function TreatisesPage() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/treatises/stats");
+      const res = await fetch(`${API_BASE_URL}/api/treatises/stats`);
       if (res.ok) {
         const data = await res.json();
         setStats(data);
@@ -65,7 +66,7 @@ export default function TreatisesPage() {
     setLoading(true);
     setError(null);
     try {
-      let url = "http://127.0.0.1:8000/api/treatises?";
+      let url = `${API_BASE_URL}/api/treatises?`;
       if (selectedCategory !== "all") {
         url += `category=${encodeURIComponent(selectedCategory)}&`;
       }
@@ -94,7 +95,7 @@ export default function TreatisesPage() {
     setVerifyLoading(true);
     setVerifyResult(null);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/treatises/verify", {
+      const res = await fetch(`${API_BASE_URL}/api/treatises/verify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

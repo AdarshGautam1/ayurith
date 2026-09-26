@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { API_BASE_URL } from "../apiConfig";
 import { 
   ArrowRight, 
   CheckCircle2, 
@@ -40,7 +41,7 @@ export default function ClassifierPage() {
   const submitClassification = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/classify", {
+      const res = await fetch(`${API_BASE_URL}/api/classify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ answers, jurisdiction: "india", language: "en" })

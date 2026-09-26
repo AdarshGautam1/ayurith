@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { API_BASE_URL } from "../apiConfig";
 import { 
   FileText, 
   Check, 
@@ -82,7 +83,7 @@ export default function ComparePage() {
 
   const fetchPresets = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/compare/presets");
+      const res = await fetch(`${API_BASE_URL}/api/compare/presets`);
       if (res.ok) {
         const data = await res.json();
         setPresets(data);
@@ -104,7 +105,7 @@ export default function ComparePage() {
   const runCompareWithData = async (title: string, forms: FormulationProfile[]) => {
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/compare/formulations", {
+      const res = await fetch(`${API_BASE_URL}/api/compare/formulations`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
