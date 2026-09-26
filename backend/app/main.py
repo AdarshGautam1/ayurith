@@ -1,5 +1,15 @@
+import os
 import sys
 import socket
+
+# Restrict thread pools for PyTorch, OpenMP, and BLAS to prevent OOM in 512MB containers
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ["ANONYMIZED_TELEMETRY"] = "False"
 
 # Force IPv4 socket resolution only on Windows to avoid IPv6 routing blackholes/delays
 if sys.platform == "win32":
