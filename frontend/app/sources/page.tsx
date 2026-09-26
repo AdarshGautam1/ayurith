@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { API_BASE_URL } from "../apiConfig";
 import { 
   BookOpen, 
   UploadCloud, 
@@ -86,7 +87,7 @@ export default function SourcesPage() {
       if (selectedDocType !== "all") params.append("document_type", selectedDocType);
       if (search.trim()) params.append("search", search.trim());
 
-      const res = await fetch(`http://localhost:8000/api/sources?${params.toString()}`);
+      const res = await fetch(`${API_BASE_URL}/api/sources?${params.toString()}`);
       if (res.ok) {
         const data = await res.json();
         setSources(data);
@@ -100,7 +101,7 @@ export default function SourcesPage() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/sources/stats");
+      const res = await fetch(`${API_BASE_URL}/api/sources/stats`);
       if (res.ok) {
         const data = await res.json();
         setStats(data);
@@ -126,7 +127,7 @@ export default function SourcesPage() {
     setLoadingChunks(true);
     setDocChunks([]);
     try {
-      const res = await fetch(`http://localhost:8000/api/sources/${doc.id}/chunks`);
+      const res = await fetch(`${API_BASE_URL}/api/sources/${doc.id}/chunks`);
       if (res.ok) {
         const chunks = await res.json();
         setDocChunks(chunks);
@@ -156,7 +157,7 @@ export default function SourcesPage() {
     if (ingestDate.trim()) formData.append("effective_date", ingestDate.trim());
 
     try {
-      const res = await fetch("http://localhost:8000/api/ingest/upload", {
+      const res = await fetch(`${API_BASE_URL}/api/ingest/upload`, {
         method: "POST",
         body: formData,
       });

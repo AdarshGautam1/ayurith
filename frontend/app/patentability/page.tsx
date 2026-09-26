@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { API_BASE_URL } from "../apiConfig";
 import { 
   FileText, 
   Check, 
@@ -82,7 +83,7 @@ export default function PatentabilityPage() {
 
   const fetchBenchmarks = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/patentability/benchmarks");
+      const res = await fetch(`${API_BASE_URL}/api/patentability/benchmarks`);
       if (res.ok) {
         const data = await res.json();
         setBenchmarks(data);
@@ -130,7 +131,7 @@ export default function PatentabilityPage() {
         target_jurisdictions: jurisdictions
       };
 
-      const res = await fetch("http://127.0.0.1:8000/api/patentability/evaluate", {
+      const res = await fetch(`${API_BASE_URL}/api/patentability/evaluate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

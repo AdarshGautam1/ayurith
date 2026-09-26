@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { API_BASE_URL } from "../apiConfig";
 import { FileText, Check } from "lucide-react";
 
 interface IngredientDose {
@@ -73,7 +74,7 @@ export default function SynergyPage() {
 
   const fetchPresets = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/synergy/presets");
+      const res = await fetch(`${API_BASE_URL}/api/synergy/presets`);
       if (res.ok) {
         const data = await res.json();
         setPresets(data);
@@ -123,7 +124,7 @@ export default function SynergyPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/synergy/evaluate", {
+      const res = await fetch(`${API_BASE_URL}/api/synergy/evaluate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { API_BASE_URL } from "../apiConfig";
 import { Printer, AlertTriangle } from "lucide-react";
 
 interface CompliancePillar {
@@ -49,7 +50,7 @@ export default function DossierPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/dossier/generate", {
+      const res = await fetch(`${API_BASE_URL}/api/dossier/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
