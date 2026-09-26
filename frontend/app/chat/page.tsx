@@ -20,6 +20,7 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false);
   const [jurisdiction, setJurisdiction] = useState("india");
   const [language, setLanguage] = useState("en");
+  const [conversationId, setConversationId] = useState<string | null>(null);
   const [expandedSource, setExpandedSource] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -55,10 +56,17 @@ export default function ChatPage() {
         body: JSON.stringify({
           query: userMsg,
           jurisdiction,
-          language
+          language,
+          conversation_id: conversationId || undefined
         })
       });
       const data = await res.json();
+      if (data.conversation_id) {
+        setConversationId(data.conversation_id);
+      }
+      if (data.language === "hi") {
+        setLanguage("hi");
+      }
       setMessages(prev => [...prev, { role: "assistant", ...data }]);
     } catch (error) {
       setMessages(prev => [...prev, { 

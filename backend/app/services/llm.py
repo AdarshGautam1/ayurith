@@ -43,6 +43,20 @@ Output format (JSON):
   "has_partial_coverage": false
 }"""
 
+def clean_json_response(raw_text: str) -> Dict[str, Any]:
+    """Robustly extracts and parses JSON even if wrapped in markdown code blocks or trailing text."""
+    text = raw_text.strip()
+    if "```" in text:
+        text = re.sub(r"^```[a-zA-Z]*\n?", "", text)
+        text = re.sub(r"\n?```$", "", text).strip()
+    try:
+        return json.loads(text)
+    except Exception:
+        match = re.search(r"(\{[\s\S]*\})", raw_text)
+        if match:
+            return json.loads(match.group(1))
+        raise
+
 def _build_extractive_fallback(query: str, evidence_context: str) -> Dict[str, Any]:
     """
     Constructs a citation-grounded extractive statutory answer from retrieved context
@@ -89,7 +103,10 @@ def _build_extractive_fallback(query: str, evidence_context: str) -> Dict[str, A
         sources_used.append(source_num)
 
     lines.append("\n**Regulatory Conclusion**: Under the statutory provisions cited above, traditional Ayurvedic formulations and non-synergistic herbal compositions are subject to explicit statutory scrutiny and potential exclusions unless substantiated with empirical evidence of synergy or adherence to First Schedule authoritative texts.")
-    lines.append("\n*(Note: Citation-grounded statutory analysis generated from indexed gazettes. Set a valid GEMINI_API_KEY in backend/.env for dynamic conversational reasoning.)*")
+    if not settings.gemini_api_key or "your_gemini_api_key" in settings.gemini_api_key.lower():
+        lines.append("\n*(Note: Citation-grounded statutory analysis generated from indexed gazettes. Set a valid GEMINI_API_KEY in backend/.env for dynamic conversational reasoning.)*")
+    else:
+        lines.append("\n*(Note: Grounded statutory analysis synthesized from indexed gazettes).*")
 
     return {
         "answer": "\n".join(lines),
@@ -100,39 +117,56 @@ def _build_extractive_fallback(query: str, evidence_context: str) -> Dict[str, A
         "has_partial_coverage": False
     }
 
-def generate_rag_response(query: str, evidence_context: str) -> Dict[str, Any]:
+def generate_rag_response(query: str, evidence_context: str, target_language: str = "en") -> Dict[str, Any]:
     # Check if Gemini key is set to placeholder or empty
     if not settings.gemini_api_key or "your_gemini_api_key" in settings.gemini_api_key.lower():
         logger.info("Using extractive statutory fallback (GEMINI_API_KEY not configured).")
         return _build_extractive_fallback(query, evidence_context)
 
     client = get_genai_client()
-    prompt = f"User Query: {query}\n\nEvidence Context:\n{evidence_context}"
     
-    # Try candidate models in order of priority
-    candidate_models = [settings.gemini_model, "gemini-2.5-flash", "gemini-1.5-flash", "gemini-2.0-flash"]
-    # De-duplicate while preserving order
-    models_to_try = list(dict.fromkeys(candidate_models))
+    lang_instruction = ""
+    if target_language == "hi":
+        lang_instruction = (
+            "\n\nCRITICAL LANGUAGE REQUIREMENT: You MUST formulate the 'answer' field entirely in clear, authentic, and authoritative Hindi (हिन्दी, Devanagari script). "
+            "Preserve statutory section numbers (e.g. धारा 3(p)) and exact citation brackets like [1], [2]."
+        )
+        
+    prompt = f"User Query: {query}\n\nEvidence Context:\n{evidence_context}{lang_instruction}"
     
+    # Try candidate models in order of priority: working flash models
+    candidate_models = list(dict.fromkeys([
+        settings.gemini_model,
+        "gemini-3-flash-preview",
+        "gemini-3.8-flash"
+    ]))
+    
+    import time
     last_error = None
-    for model_name in models_to_try:
-        try:
-            response = client.models.generate_content(
-                model=model_name,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    system_instruction=SYSTEM_PROMPT,
-                    temperature=0.1,
-                    response_mime_type="application/json",
+    for model_name in candidate_models:
+        for attempt in range(2):
+            try:
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        system_instruction=SYSTEM_PROMPT,
+                        temperature=0.1,
+                        response_mime_type="application/json",
+                    )
                 )
-            )
-            # Parse JSON
-            result = json.loads(response.text)
-            return result
-        except Exception as e:
-            last_error = e
-            logger.warning(f"Error calling Gemini with model {model_name}: {e}")
-            continue
+                # Parse JSON safely
+                result = clean_json_response(response.text)
+                return result
+            except Exception as e:
+                last_error = e
+                err_str = str(e).lower()
+                logger.warning(f"Error calling Gemini with model {model_name} (attempt {attempt + 1}): {e}")
+                # If high demand (503) or rate-limit (429), pause briefly before retry
+                if ("503" in err_str or "unavailable" in err_str or "429" in err_str) and attempt == 0:
+                    time.sleep(1.0)
+                    continue
+                break
 
     logger.error(f"All Gemini models failed. Last error: {last_error}")
     # Fallback to grounded extractive synthesis from the actual evidence

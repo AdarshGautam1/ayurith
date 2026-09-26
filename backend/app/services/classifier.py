@@ -3,7 +3,7 @@ import logging
 from typing import Dict, Any, List
 from google.genai import types
 from app.models.schemas import ClassifyRequest, ClassificationResult, SourceCard
-from app.services.llm import get_genai_client
+from app.services.llm import get_genai_client, clean_json_response
 from app.services.translation import translator
 from app.services.retrieval import retrieve_chunks, format_evidence_context
 from app.services.source_validation import validate_sources
@@ -139,22 +139,34 @@ def process_classification(request: ClassifyRequest) -> ClassificationResult:
         client = get_genai_client()
         prompt = CLASSIFIER_PROMPT.replace("{category}", category) + f"\n\nFormulation Details:\n{answers_str}\n\nEvidence Context:\n{evidence_context}"
         
-        candidate_models = list(dict.fromkeys([settings.gemini_model, "gemini-2.5-flash", "gemini-1.5-flash", "gemini-2.0-flash"]))
+        candidate_models = list(dict.fromkeys([
+            settings.gemini_model,
+            "gemini-3-flash-preview",
+            "gemini-3.8-flash"
+        ]))
+        import time
         for model_name in candidate_models:
-            try:
-                response = client.models.generate_content(
-                    model=model_name,
-                    contents=prompt,
-                    config=types.GenerateContentConfig(
-                        temperature=0.1,
-                        response_mime_type="application/json"
+            for attempt in range(2):
+                try:
+                    response = client.models.generate_content(
+                        model=model_name,
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            temperature=0.1,
+                            response_mime_type="application/json"
+                        )
                     )
-                )
-                llm_output = json.loads(response.text)
+                    llm_output = clean_json_response(response.text)
+                    break
+                except Exception as e:
+                    err_str = str(e).lower()
+                    logger.warning(f"Error calling Gemini in classification with {model_name} (attempt {attempt + 1}): {e}")
+                    if ("503" in err_str or "unavailable" in err_str or "429" in err_str) and attempt == 0:
+                        time.sleep(1.0)
+                        continue
+                    break
+            if llm_output:
                 break
-            except Exception as e:
-                logger.warning(f"Error calling Gemini in classification with {model_name}: {e}")
-                continue
 
     if not llm_output:
         llm_output = _get_classification_fallback(category, request.answers, valid_sources)

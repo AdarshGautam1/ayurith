@@ -9,24 +9,24 @@ def calculate_confidence(cited_sources: List[SourceCard], has_conflict: bool, ha
     if not cited_sources:
         return "INSUFFICIENT"
         
-    # Calculate average relevance score of cited sources
     avg_relevance = sum(s.relevance_score for s in cited_sources) / len(cited_sources)
     top_relevance = max(s.relevance_score for s in cited_sources)
     
-    # Check authority (simple heuristic for MVP: Acts and Treaties are high authority)
-    authoritative_sources = [s for s in cited_sources if s.document_type.lower() in ["act", "treaty", "protocol", "convention"]]
+    # Check authority (Acts, Rules, Treaties, Protocols, Gazettes, Regulations)
+    authoritative_sources = [
+        s for s in cited_sources 
+        if any(k in (s.document_type + " " + s.title + " " + s.authority).lower() for k in ["act", "treaty", "protocol", "convention", "rule", "fssai", "schedule", "patents", "biodiversity", "drugs"])
+    ]
     num_authoritative = len(authoritative_sources)
     
-    if top_relevance > 0.70 and num_authoritative >= 2 and not has_conflict and not has_partial_coverage:
+    if top_relevance >= 0.35 and num_authoritative >= 1 and not has_conflict and not has_partial_coverage:
         return "HIGH"
     
-    if top_relevance >= 0.50 and top_relevance <= 0.70:
-        return "MEDIUM"
-        
-    if has_partial_coverage or (top_relevance > 0.70 and has_conflict == False and num_authoritative < 2):
-        return "MEDIUM"
-        
-    if top_relevance < 0.50 or has_conflict or num_authoritative == 0:
-        return "LOW"
+    if top_relevance >= 0.25:
+        if has_conflict:
+            return "LOW"
+        if has_partial_coverage:
+            return "MEDIUM"
+        return "HIGH" if num_authoritative >= 1 else "MEDIUM"
         
     return "LOW"
