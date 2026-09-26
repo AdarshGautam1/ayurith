@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --color-shakti-green: #1a5632;
+  --color-shakti-green-light: #2d7a4a;
+  --color-shakti-saffron: #c17f24;
+  --color-shakti-bg: #faf9f6;
+  --color-shakti-surface: #ffffff;
+  --color-shakti-text: #1c1c1c;
+  --color-shakti-text-secondary: #5a5a5a;
+  --color-shakti-border: #e5e2dc;
+  
+  --color-confidence-high: #16803c;
+  --color-confidence-medium: #b45309;
+  --color-confidence-low: #b91c1c;
+  --color-confidence-insufficient: #6b7280;
+  
+  --font-heading: "Outfit", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+/* Custom daisyUI theme mapping */
+:root {
+  /* This wires up the standard daisyUI colors to our tokens */
+  --p: var(--color-shakti-green); /* primary */
+  --s: var(--color-shakti-saffron); /* secondary */
+  --a: var(--color-shakti-green-light); /* accent */
+  --b1: var(--color-shakti-surface); /* base-100 (surface) */
+  --b2: var(--color-shakti-bg); /* base-200 (background) */
+  --bc: var(--color-shakti-text); /* base content */
+  --bc-sec: var(--color-shakti-text-secondary); /* base content secondary */
+  
+  font-family: var(--font-body);
+  background-color: var(--color-shakti-bg);
+  color: var(--color-shakti-text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+.text-confidence-high { color: var(--color-confidence-high); }
+.text-confidence-medium { color: var(--color-confidence-medium); }
+.text-confidence-low { color: var(--color-confidence-low); }
+.text-confidence-insufficient { color: var(--color-confidence-insufficient); }
+
+.bg-confidence-high { background-color: var(--color-confidence-high); color: white; }
+.bg-confidence-medium { background-color: var(--color-confidence-medium); color: white; }
+.bg-confidence-low { background-color: var(--color-confidence-low); color: white; }
+.bg-confidence-insufficient { background-color: var(--color-confidence-insufficient); color: white; }

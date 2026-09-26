@@ -1,0 +1,9 @@
+⚠️ DEMO DATA — NOT AUTHORITATIVE
+This is a summarized excerpt for development and demonstration purposes only.
+It is not a substitute for the official published text.
+
+Patents Act, 1970
+Section 2(1)(ja) - "inventive step" means a feature of an invention that involves technical advance as compared to the existing knowledge or having economic significance or both and that makes the invention not obvious to a person skilled in the art.
+Section 3 - What are not inventions
+The following are not inventions within the meaning of this Act:
+(p) an invention which in effect, is traditional knowledge or which is an aggregation or duplication of known properties of traditionally known component or components.

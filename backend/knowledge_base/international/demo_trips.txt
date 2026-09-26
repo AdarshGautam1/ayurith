@@ -1,0 +1,9 @@
+⚠️ DEMO DATA — NOT AUTHORITATIVE
+This is a summarized excerpt for development and demonstration purposes only.
+It is not a substitute for the official published text.
+
+Agreement on Trade-Related Aspects of Intellectual Property Rights (TRIPS)
+Article 27 - Patentable Subject Matter
+1. Patents shall be available for any inventions, whether products or processes, in all fields of technology, provided that they are new, involve an inventive step and are capable of industrial application.
+3. Members may also exclude from patentability:
+(b) plants and animals other than micro-organisms, and essentially biological processes for the production of plants or animals other than non-biological and microbiological processes. However, Members shall provide for the protection of plant varieties either by patents or by an effective sui generis system or by any combination thereof.
